@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Cerner Test Page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript">
+
+	function newWindow () {
+		// var scriptText = "alert('hi');";
+		var scriptText = `
+			console.log('run');
+			const Http = new XMLHttpRequest();
+			const url='https://aws.hawaiirg.com:8443/JLV/PostLogin';
+			var params = 'userEDIPI=0000000002&userName=username&userNCID=123&patientEDIPI=0000000001&facilityNCID=456&loginSource=cerner';
+			Http.open('POST', url, true);
+
+			//Send the proper header information along with the request
+			Http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+			Http.onreadystatechange = function() {
+		    	if (Http.readyState == 4 && Http.status == 200) {
+		    		console.log('success');
+		        	$('body').html(Http.response);
+		        }
+		    };
+		    Http.send(params);`;
+
+		var win = window.open('https://aws.hawaiirg.com:8443/JLV');
+	  	win.document.head.innerHTML = '<title>JLV</title></head>';
+		win.document.body.innerHTML = '<body>Test</body>';
+		var script = document.createElement('script');
+		script.textContent = scriptText;
+		win.document.head.appendChild(script);
+	}
+
+// $("#button").click(newWindow);
+	function login () {
+		console.log("run");
+		const Http = new XMLHttpRequest();
+		const url='https://aws.hawaiirg.com:8443/JLV/PostLogin';
+		var params = 'userEDIPI=0000000002&userName=username&userNCID=123&patientEDIPI=0000000001&facilityNCID=456&loginSource=cerner';
+		Http.open('POST', url, true);
+
+		//Send the proper header information along with the request
+		Http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+		Http.onreadystatechange = function() {
+	    	if (Http.readyState == 4 && Http.status == 200) {
+	    		console.log('success');
+	        	$('body').html(Http.response);
+	        }
+	    };
+
+	    Http.send(params);
+	}
+	</script>
+</head>
+
+<body>
+	<a href="javascript:newWindow()">Post</a>
+</body>
+</html>
